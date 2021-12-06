@@ -1,0 +1,68 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "l1",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "l1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-l1-Debug-99fb51e6391a10a7b8d6.json",
+					"name" : "l1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "l1_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-l1_autogen-Debug-baaa07b5cbec72d0e57e.json",
+					"name" : "l1_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/msys64/home/Sh1r0/oop/1st_try_l1/build-l1-Desktop_Qt_5_13_2_MinGW_32_bit-Debug",
+		"source" : "C:/msys64/home/Sh1r0/oop/1st_try_l1/l1"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 2
+	}
+}

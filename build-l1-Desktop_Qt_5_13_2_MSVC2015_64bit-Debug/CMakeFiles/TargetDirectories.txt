@@ -1,0 +1,4 @@
+C:/msys64/home/Sh1r0/oop/1st_try_l1/build-l1-Desktop_Qt_5_13_2_MSVC2015_64bit-Debug/CMakeFiles/l1.dir
+C:/msys64/home/Sh1r0/oop/1st_try_l1/build-l1-Desktop_Qt_5_13_2_MSVC2015_64bit-Debug/CMakeFiles/edit_cache.dir
+C:/msys64/home/Sh1r0/oop/1st_try_l1/build-l1-Desktop_Qt_5_13_2_MSVC2015_64bit-Debug/CMakeFiles/rebuild_cache.dir
+C:/msys64/home/Sh1r0/oop/1st_try_l1/build-l1-Desktop_Qt_5_13_2_MSVC2015_64bit-Debug/CMakeFiles/l1_autogen.dir
