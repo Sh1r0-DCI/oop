@@ -76,7 +76,7 @@ vertices_t z_rotate(vertices_t point, double angle)
 
 vertices_t screen_projection(vertices_t point)
 {
-    double alpha_angle = 55, beta_angle = 35;
+    double alpha_angle = 57, beta_angle = 35;
 
     vertices_t temp_vert = point;
 
