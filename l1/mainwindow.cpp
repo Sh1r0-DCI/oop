@@ -67,7 +67,7 @@ void MainWindow::on_pushButton_clicked()//load_button
 
     draw_model(model);
 
-    output_model_array(model);
+//    output_model_array(model);
 
     fclose(f);
 }
