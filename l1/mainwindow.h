@@ -18,11 +18,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_clicked();
-
-    void on_lineEdit_returnPressed();
 
     int draw_model(model_t model);
+
+    void on_load_button_clicked();
+
+    void on_lineEdit_filename_returnPressed();
 
 private:
     Ui::MainWindow *ui;

@@ -45,12 +45,12 @@ int MainWindow::draw_model(model_t model)
     return 0;
 }
 
-void MainWindow::on_pushButton_clicked()//load_button
+void MainWindow::on_load_button_clicked()//load_button
 {
     FILE *f = NULL;
     model_t model;
 
-    QString str = (ui->lineEdit->text());
+    QString str = (ui->lineEdit_filename->text());
     QMessageBox::information(this, "Открытие файла", str);
     if (file_load(str, f))
     {
@@ -72,7 +72,7 @@ void MainWindow::on_pushButton_clicked()//load_button
     fclose(f);
 }
 
-void MainWindow::on_lineEdit_returnPressed()
+void MainWindow::on_lineEdit_filename_returnPressed()
 {
-    MainWindow::on_pushButton_clicked();
+    MainWindow::on_load_button_clicked();
 }

@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_filename">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -55,7 +55,7 @@
      <string>Имя файла</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="load_button">
     <property name="geometry">
      <rect>
       <x>250</x>
@@ -153,12 +153,102 @@
       <string>Поворот</string>
      </property>
     </widget>
+    <widget class="QSpinBox" name="spinBox_rot_x">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>300</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>-359</number>
+     </property>
+     <property name="maximum">
+      <number>359</number>
+     </property>
+     <property name="value">
+      <number>0</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_rot_y">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>300</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>-359</number>
+     </property>
+     <property name="maximum">
+      <number>359</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinBox_rot_z">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>300</y>
+       <width>61</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <number>-359</number>
+     </property>
+     <property name="maximum">
+      <number>359</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>330</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>X</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>330</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Y</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>330</y>
+       <width>21</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Z</string>
+     </property>
+    </widget>
    </widget>
    <zorder>groupBox</zorder>
    <zorder>graphicsView</zorder>
-   <zorder>lineEdit</zorder>
+   <zorder>lineEdit_filename</zorder>
    <zorder>label</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>load_button</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

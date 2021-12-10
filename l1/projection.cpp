@@ -32,9 +32,9 @@ vertices_t x_rotate(vertices_t point, double angle)
     angle = deg_to_rad(angle);
 
     const double alpha_rotate[3][3] = {
-        1,  0,            0,
-        0,  cos(angle),   -sin(angle),
-        0,  sin(angle),   cos(angle)
+        {1,  0,                      0},
+        {0,  cos(angle),   -sin(angle)},
+        {0,  sin(angle),    cos(angle)}
     };
 
     temp_vert = matrix_mult_vector(point, alpha_rotate);
@@ -48,9 +48,9 @@ vertices_t y_rotate(vertices_t point, double angle)
     angle = deg_to_rad(angle);
 
     const double beta_rotate[3][3] = {
-        cos(angle),    0, sin(angle),
-        0,                  1, 0,
-        -sin(angle),   0, cos(angle)
+        {cos(angle),    0, sin(angle)},
+        {0,             1,          0},
+        {-sin(angle),   0, cos(angle)}
     };
 
     temp_vert = matrix_mult_vector(point, beta_rotate);
@@ -64,9 +64,9 @@ vertices_t z_rotate(vertices_t point, double angle)
     angle = deg_to_rad(angle);
 
     const double gamma_rotate[3][3] = {
-        cos(angle), -sin(angle),    0,
-        sin(angle), cos(angle),     0,
-        0,          0,              1
+        {cos(angle), -sin(angle),    0},
+        {sin(angle), cos(angle),     0},
+        {0,          0,              1}
     };
 
     temp_vert = matrix_mult_vector(point, gamma_rotate);
@@ -76,12 +76,12 @@ vertices_t z_rotate(vertices_t point, double angle)
 
 vertices_t screen_projection(vertices_t point)
 {
-    double alpha_angle = 55, beta_angle = 35;
+    double alpha_angle = 35, beta_angle = 55;
 
     vertices_t temp_vert = point;
 
-    temp_vert = x_rotate(temp_vert, alpha_angle);
     temp_vert = y_rotate(temp_vert, beta_angle);
+    temp_vert = x_rotate(temp_vert, alpha_angle);
 
     return temp_vert;
 }
