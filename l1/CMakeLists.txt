@@ -35,11 +35,13 @@ set(PROJECT_SOURCES
 
         mainwindow.ui
 
-        model_load.cpp
+        model.cpp
         projection.cpp
+        task_manager.cpp
 
-        model_load.h
+        model.h
         projection.h
+        task_manager.h
         error_codes.h
 )
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

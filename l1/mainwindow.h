@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 
-#include "model_load.h"
+#include "model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,11 +19,17 @@ public:
 
 private slots:
 
-    int draw_model(model_t model);
+    int draw_on_scene();
 
     void on_load_button_clicked();
 
     void on_lineEdit_filename_returnPressed();
+
+    void on_scale_button_clicked();
+
+    void on_move_button_clicked();
+
+    void on_rotate_button_clicked();
 
 private:
     Ui::MainWindow *ui;

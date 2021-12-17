@@ -26,7 +26,7 @@ static vertices_t matrix_mult_vector(vertices_t point, const double rotate_matri
     return temp_vert;
 }
 
-vertices_t x_rotate(vertices_t point, double angle)
+static vertices_t x_rotate(vertices_t point, int angle)
 {
     vertices_t temp_vert;
     angle = deg_to_rad(angle);
@@ -42,7 +42,7 @@ vertices_t x_rotate(vertices_t point, double angle)
     return temp_vert;
 }
 
-vertices_t y_rotate(vertices_t point, double angle)
+static vertices_t y_rotate(vertices_t point, int angle)
 {
     vertices_t temp_vert;
     angle = deg_to_rad(angle);
@@ -58,7 +58,7 @@ vertices_t y_rotate(vertices_t point, double angle)
     return temp_vert;
 }
 
-vertices_t z_rotate(vertices_t point, double angle)
+static vertices_t z_rotate(vertices_t point, int angle)
 {
     vertices_t temp_vert;
     angle = deg_to_rad(angle);
@@ -72,6 +72,27 @@ vertices_t z_rotate(vertices_t point, double angle)
     temp_vert = matrix_mult_vector(point, gamma_rotate);
 
     return temp_vert;
+}
+
+void point_rotate(vertices_t &point, int angle_x, int angle_y, int angle_z)
+{
+    point = x_rotate(point, angle_x);
+    point = y_rotate(point, angle_y);
+    point = z_rotate(point, angle_z);
+}
+
+void point_scale(vertices_t &point, vertices_t coef, vertices_t center)
+{
+    point.x = center.x + (point.x - center.x) * coef.x;
+    point.y = center.y + (point.y - center.y) * coef.y;
+    point.z = center.z + (point.z - center.z) * coef.z;
+}
+
+void point_move(vertices_t &point, vertices_t coef)
+{
+    point.x += coef.x;
+    point.y += coef.y;
+    point.z += coef.z;
 }
 
 vertices_t screen_projection(vertices_t point)

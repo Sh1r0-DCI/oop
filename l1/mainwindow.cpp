@@ -3,7 +3,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-#include "projection.h"
+#include "task_manager.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,59 +20,76 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-int MainWindow::draw_model(model_t model)
+int MainWindow::draw_on_scene()
 {
-    QGraphicsScene *scene = ui->graphicsView->scene();
+    static QGraphicsScene *scene = ui->graphicsView->scene();
     scene->clear();
 
-    for (int i = 0; i < model.num_of_edges; i++)
-    {
-        vertices_t first_point, second_point;
+    data_t only_scene;
+    only_scene.scene = scene;
 
-        first_point = model.vertices[model.edges[i].first_edge];
-        second_point = model.vertices[model.edges[i].second_edge];
-
-        first_point = screen_projection(first_point);
-        first_point.y = ui->centralwidget->height() - first_point.y;
-
-        second_point = screen_projection(second_point);
-        second_point.y = ui->centralwidget->height() - second_point.y;
-
-        scene->addLine(first_point.x, first_point.y,
-                       second_point.x, second_point.y);
-    }
+    task_manager(DRAW, only_scene);
 
     return 0;
 }
 
 void MainWindow::on_load_button_clicked()//load_button
 {
-    FILE *f = NULL;
-    model_t model;
-
     QString str = (ui->lineEdit_filename->text());
-    QMessageBox::information(this, "Открытие файла", str);
-    if (file_load(str, f))
-    {
-        QMessageBox::critical(this, "Ошибка", "Ошибка при открытии файла");
-        return;
-    }
+    data_t only_filename;
+    only_filename.filename = str;
 
-    if (parameter_read(f, model))
-    {
-        QMessageBox::critical(this, "Ошибка", "Ошибка при чтении файла");
-        fclose(f);
-        return;
-    }
+    task_manager(DOWNLOAD, only_filename);
 
-    draw_model(model);
-
-//    output_model_array(model);
-
-    fclose(f);
+    draw_on_scene();
 }
 
 void MainWindow::on_lineEdit_filename_returnPressed()
 {
     MainWindow::on_load_button_clicked();
+}
+
+void MainWindow::on_scale_button_clicked()
+{
+    vertices_t scale_coef;
+    scale_coef.x = ui->spinBox_scale_x->text().toDouble();
+    scale_coef.y = ui->spinBox_scale_y->text().toDouble();
+    scale_coef.z = ui->spinBox_scale_z->text().toDouble();
+
+    data_t only_coef;
+    only_coef.coef = scale_coef;
+
+    task_manager(SCALE, only_coef);
+
+    draw_on_scene();
+}
+
+void MainWindow::on_move_button_clicked()
+{
+    vertices_t move_coef;
+    move_coef.x = ui->spinBox_move_x->text().toDouble();
+    move_coef.y = ui->spinBox_move_y->text().toDouble();
+    move_coef.z = ui->spinBox_move_z->text().toDouble();
+
+    data_t only_coef;
+    only_coef.coef = move_coef;
+
+    task_manager(SCALE, only_coef);
+
+    draw_on_scene();
+}
+
+void MainWindow::on_rotate_button_clicked()
+{
+    vertices_t rotate_coef;
+    rotate_coef.x = ui->spinBox_rot_x->text().toDouble();
+    rotate_coef.y = ui->spinBox_rot_y->text().toDouble();
+    rotate_coef.z = ui->spinBox_rot_z->text().toDouble();
+
+    data_t only_coef;
+    only_coef.coef = rotate_coef;
+
+    task_manager(SCALE, only_coef);
+
+    draw_on_scene();
 }

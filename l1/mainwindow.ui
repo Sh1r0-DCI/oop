@@ -34,7 +34,7 @@
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>cubeModel.txt</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -90,74 +90,11 @@
     <property name="title">
      <string>Преобразования</string>
     </property>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>70</x>
-       <y>40</y>
-       <width>169</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Масштабирование</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>150</y>
-       <width>78</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Перенос</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>110</x>
-       <y>260</y>
-       <width>77</width>
-       <height>24</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>Поворот</string>
-     </property>
-    </widget>
     <widget class="QSpinBox" name="spinBox_rot_x">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>300</y>
+       <y>290</y>
        <width>61</width>
        <height>22</height>
       </rect>
@@ -176,7 +113,7 @@
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>300</y>
+       <y>290</y>
        <width>61</width>
        <height>22</height>
       </rect>
@@ -192,7 +129,7 @@
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>300</y>
+       <y>290</y>
        <width>61</width>
        <height>22</height>
       </rect>
@@ -204,45 +141,204 @@
       <number>359</number>
      </property>
     </widget>
-    <widget class="QLabel" name="label_5">
+    <widget class="QPushButton" name="rotate_button">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>330</y>
+       <width>191</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Повернуть</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="spinBox_scale_x">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>330</y>
-       <width>21</width>
-       <height>16</height>
+       <y>70</y>
+       <width>62</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="text">
-      <string>X</string>
+     <property name="minimum">
+      <double>-9999.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>9999.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>1.000000000000000</double>
      </property>
     </widget>
-    <widget class="QLabel" name="label_6">
+    <widget class="QDoubleSpinBox" name="spinBox_scale_y">
      <property name="geometry">
       <rect>
        <x>110</x>
-       <y>330</y>
-       <width>21</width>
-       <height>16</height>
+       <y>70</y>
+       <width>62</width>
+       <height>22</height>
       </rect>
      </property>
-     <property name="text">
-      <string>Y</string>
+     <property name="minimum">
+      <double>-9999.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>9999.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>1.000000000000000</double>
      </property>
     </widget>
-    <widget class="QLabel" name="label_8">
+    <widget class="QDoubleSpinBox" name="spinBox_scale_z">
      <property name="geometry">
       <rect>
        <x>200</x>
-       <y>330</y>
-       <width>21</width>
-       <height>16</height>
+       <y>70</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-9999.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>9999.000000000000000</double>
+     </property>
+     <property name="value">
+      <double>1.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="spinBox_move_x">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>180</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-9999.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>9999.989999999999782</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="spinBox_move_y">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>180</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-9999.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>9999.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="spinBox_move_z">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>180</y>
+       <width>62</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="minimum">
+      <double>-9999.000000000000000</double>
+     </property>
+     <property name="maximum">
+      <double>9999.000000000000000</double>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="move_button">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>220</y>
+       <width>191</width>
+       <height>28</height>
       </rect>
      </property>
      <property name="text">
-      <string>Z</string>
+      <string>Перенести</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="scale_button">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>110</y>
+       <width>191</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Отмасштабировать</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>271</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Масштабирование</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>150</y>
+       <width>271</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Перенос</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_4">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>260</y>
+       <width>271</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string>Поворот</string>
+     </property>
+    </widget>
+    <zorder>groupBox_4</zorder>
+    <zorder>groupBox_2</zorder>
+    <zorder>groupBox_3</zorder>
+    <zorder>spinBox_rot_x</zorder>
+    <zorder>spinBox_rot_y</zorder>
+    <zorder>spinBox_rot_z</zorder>
+    <zorder>rotate_button</zorder>
+    <zorder>spinBox_scale_x</zorder>
+    <zorder>spinBox_scale_y</zorder>
+    <zorder>spinBox_scale_z</zorder>
+    <zorder>spinBox_move_x</zorder>
+    <zorder>spinBox_move_y</zorder>
+    <zorder>spinBox_move_z</zorder>
+    <zorder>move_button</zorder>
+    <zorder>scale_button</zorder>
    </widget>
    <zorder>groupBox</zorder>
    <zorder>graphicsView</zorder>
