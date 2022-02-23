@@ -57,14 +57,9 @@ void MainWindow::on_scale_button_clicked()          //need debug here
 {
     vertices_t scale_coef;
     sscanf(ui->spinBox_scale_x->text().toUtf8().constData(), "%lf", &scale_coef.x);
-//    scale_coef.y = ui->spinBox_scale_y->text().toDouble();
     sscanf(ui->spinBox_scale_y->text().toUtf8().constData(), "%lf", &scale_coef.y);
-//    scale_coef.z = ui->spinBox_scale_z->text().toDouble();
     sscanf(ui->spinBox_scale_z->text().toUtf8().constData(), "%lf", &scale_coef.z);
 
-   //output of things above
-    QMessageBox::information(this, "scale_coef", ui->spinBox_scale_x->text());
-    QMessageBox::information(this, "scale_coef real", QString::number(scale_coef.x)); //check for wrong convertation
 
     data_t only_coef;
     only_coef.coef = scale_coef;
@@ -77,14 +72,18 @@ void MainWindow::on_scale_button_clicked()          //need debug here
 void MainWindow::on_move_button_clicked()
 {
     vertices_t move_coef;
-    move_coef.x = ui->spinBox_move_x->text().toDouble();
-    move_coef.y = ui->spinBox_move_y->text().toDouble();
-    move_coef.z = ui->spinBox_move_z->text().toDouble();
+    sscanf(ui->spinBox_move_x->text().toUtf8().constData(), "%lf", &move_coef.x);
+    sscanf(ui->spinBox_move_y->text().toUtf8().constData(), "%lf", &move_coef.y);
+    sscanf(ui->spinBox_move_z->text().toUtf8().constData(), "%lf", &move_coef.z);
+
+
+    QMessageBox::information(this, "move_cf", ui->spinBox_move_y->text());
+    QMessageBox::information(this, "real move_cf", QString::number(move_coef.y));
 
     data_t only_coef;
     only_coef.coef = move_coef;
 
-    task_manager(SCALE, only_coef);
+    task_manager(MOVE, only_coef);
 
     draw_on_scene();
 }
@@ -92,14 +91,14 @@ void MainWindow::on_move_button_clicked()
 void MainWindow::on_rotate_button_clicked()
 {
     vertices_t rotate_coef;
-    rotate_coef.x = ui->spinBox_rot_x->text().toDouble();
-    rotate_coef.y = ui->spinBox_rot_y->text().toDouble();
-    rotate_coef.z = ui->spinBox_rot_z->text().toDouble();
+    sscanf(ui->spinBox_rot_x->text().toUtf8().constData(), "%lf", &rotate_coef.x);
+    sscanf(ui->spinBox_rot_y->text().toUtf8().constData(), "%lf", &rotate_coef.y);
+    sscanf(ui->spinBox_rot_z->text().toUtf8().constData(), "%lf", &rotate_coef.z);
 
     data_t only_coef;
     only_coef.coef = rotate_coef;
 
-    task_manager(SCALE, only_coef);
+    task_manager(ROTATE, only_coef);
 
     draw_on_scene();
 }
