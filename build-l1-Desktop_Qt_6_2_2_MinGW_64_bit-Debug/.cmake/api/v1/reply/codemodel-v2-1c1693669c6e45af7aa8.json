@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "l1",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "l1::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-l1-Debug-6e182f805d80690bff54.json",
+					"name" : "l1",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "l1_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-l1_autogen-Debug-f8a0804d42342dad2c5d.json",
+					"name" : "l1_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "l1_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-l1_autogen_timestamp_deps-Debug-3bd30eaee99278cf1648.json",
+					"name" : "l1_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/ASUS/Documents/GitHub/oop/build-l1-Desktop_Qt_6_2_2_MinGW_64_bit-Debug",
+		"source" : "C:/Users/ASUS/Documents/GitHub/oop/l1"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

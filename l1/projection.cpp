@@ -83,6 +83,7 @@ void point_rotate(vertices_t &point, int angle_x, int angle_y, int angle_z)
 
 void point_scale(vertices_t &point, vertices_t coef, vertices_t center)
 {
+//    std::cout << "vert in p_s: " <<
     point.x = center.x + (point.x - center.x) * coef.x;
     point.y = center.y + (point.y - center.y) * coef.y;
     point.z = center.z + (point.z - center.z) * coef.z;

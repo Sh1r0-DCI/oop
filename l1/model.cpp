@@ -45,6 +45,7 @@ int download_model(model_t &model, QString str)
     }
 
     fclose(f);
+    return OK;
 }
 
 int parameter_read(FILE *f, model_t &new_model)
@@ -91,7 +92,7 @@ int parameter_read(FILE *f, model_t &new_model)
 
 int file_load(QString filename, FILE *& f)
 {
-    filename = "C:\\msys64\\home\\Sh1r0\\oop\\1st_try_l1\\l1\\data\\" + filename;
+    filename = "C:\\Users\\ASUS\\Documents\\GitHub\\oop\\l1\\data\\" + filename;
     f = fopen(filename.toUtf8().data(), "r");
 
     if (f == NULL)
@@ -105,6 +106,8 @@ int file_load(QString filename, FILE *& f)
 
 void scale_model(model_t &model, vertices_t coef_scale)
 {
+    std::cout << "coef in s_m: (" << coef_scale.x << ";"
+              << coef_scale.y << ";" << coef_scale.z << ")\n";
     for (int i = 0; i < model.num_of_vertices; i++)
     {
         point_scale(model.vertices[i], coef_scale, model.center);

@@ -5,6 +5,10 @@
 
 #include "task_manager.h"
 
+#include <string>
+#include <iostream>
+#include <cstdio>
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -33,7 +37,7 @@ int MainWindow::draw_on_scene()
     return 0;
 }
 
-void MainWindow::on_load_button_clicked()//load_button
+void MainWindow::on_load_button_clicked()
 {
     QString str = (ui->lineEdit_filename->text());
     data_t only_filename;
@@ -49,12 +53,18 @@ void MainWindow::on_lineEdit_filename_returnPressed()
     MainWindow::on_load_button_clicked();
 }
 
-void MainWindow::on_scale_button_clicked()
+void MainWindow::on_scale_button_clicked()          //need debug here
 {
     vertices_t scale_coef;
-    scale_coef.x = ui->spinBox_scale_x->text().toDouble();
-    scale_coef.y = ui->spinBox_scale_y->text().toDouble();
-    scale_coef.z = ui->spinBox_scale_z->text().toDouble();
+    sscanf(ui->spinBox_scale_x->text().toUtf8().constData(), "%lf", &scale_coef.x);
+//    scale_coef.y = ui->spinBox_scale_y->text().toDouble();
+    sscanf(ui->spinBox_scale_y->text().toUtf8().constData(), "%lf", &scale_coef.y);
+//    scale_coef.z = ui->spinBox_scale_z->text().toDouble();
+    sscanf(ui->spinBox_scale_z->text().toUtf8().constData(), "%lf", &scale_coef.z);
+
+   //output of things above
+    QMessageBox::information(this, "scale_coef", ui->spinBox_scale_x->text());
+    QMessageBox::information(this, "scale_coef real", QString::number(scale_coef.x)); //check for wrong convertation
 
     data_t only_coef;
     only_coef.coef = scale_coef;
