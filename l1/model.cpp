@@ -14,10 +14,7 @@ void draw_model(QGraphicsScene *scene, model_t model)
         first_point = model.vertices[model.edges[i].first_edge];
         second_point = model.vertices[model.edges[i].second_edge];
 
-//        first_point = screen_projection(first_point);
         first_point.y = SCENE_HEIGHT - first_point.y;
-
-//        second_point = screen_projection(second_point);
         second_point.y = SCENE_HEIGHT - second_point.y;
 
         scene->addLine(first_point.x, first_point.y,

@@ -26,59 +26,86 @@ static vertices_t matrix_mult_vector(vertices_t point, const double rotate_matri
     return temp_vert;
 }
 
-static vertices_t x_rotate(vertices_t point, int angle)
-{
-    vertices_t temp_vert;
-    angle = deg_to_rad(angle);
+//static vertices_t x_rotate(vertices_t point, int angle)
+//{
+//    vertices_t temp_vert;
+//    angle = deg_to_rad(angle);
 
-    const double alpha_rotate[3][3] = {
-        {1,  0,                      0},
-        {0,  cos(angle),   -sin(angle)},
-        {0,  sin(angle),    cos(angle)}
-    };
+//    const double alpha_rotate[3][3] = {
+//        {1,  0,                      0},
+//        {0,  cos(angle),   -sin(angle)},
+//        {0,  sin(angle),    cos(angle)}
+//    };
 
-    temp_vert = matrix_mult_vector(point, alpha_rotate);
+//    temp_vert = matrix_mult_vector(point, alpha_rotate);
 
-    return temp_vert;
+//    return temp_vert;
+//}
+
+//static vertices_t y_rotate(vertices_t point, int angle)
+//{
+//    vertices_t temp_vert;
+//    angle = deg_to_rad(angle);
+
+//    const double beta_rotate[3][3] = {
+//        {cos(angle),    0, sin(angle)},
+//        {0,             1,          0},
+//        {-sin(angle),   0, cos(angle)}
+//    };
+
+//    temp_vert = matrix_mult_vector(point, beta_rotate);
+
+//    return temp_vert;
+//}
+
+//static vertices_t z_rotate(vertices_t point, int angle)
+//{
+//    angle = deg_to_rad(angle);
+
+//    const double gamma_rotate[3][3] = {
+//        {cos(angle), -sin(angle),    0},
+//        {sin(angle), cos(angle),     0},
+//        {0,          0,              1}
+//    };
+
+//    return matrix_mult_vector(point, gamma_rotate);
+//}
+
+static void x_rotate(vertices_t& point, const double angle) {
+    double radians = deg_to_rad(angle);
+
+    double temp_y = point.y;
+
+    point.y = point.y * cos(radians) + point.z * sin(radians);
+    point.z = -temp_y * sin(radians) + point.z * cos(radians);
 }
 
-static vertices_t y_rotate(vertices_t point, int angle)
-{
-    vertices_t temp_vert;
-    angle = deg_to_rad(angle);
+static void y_rotate(vertices_t& point, const double angle) {
+    double radians = deg_to_rad(angle);
 
-    const double beta_rotate[3][3] = {
-        {cos(angle),    0, sin(angle)},
-        {0,             1,          0},
-        {-sin(angle),   0, cos(angle)}
-    };
+    double temp_x = point.x;
 
-    temp_vert = matrix_mult_vector(point, beta_rotate);
-
-    return temp_vert;
+    point.x = point.x * cos(radians) + point.z * sin(radians);
+    point.z = -temp_x * sin(radians) + point.z * cos(radians);
 }
 
-static vertices_t z_rotate(vertices_t point, int angle)
-{
-    vertices_t temp_vert;
-    angle = deg_to_rad(angle);
+static void z_rotate(vertices_t& point, const double angle) {
+    double radians = deg_to_rad(angle);
 
-    const double gamma_rotate[3][3] = {
-        {cos(angle), -sin(angle),    0},
-        {sin(angle), cos(angle),     0},
-        {0,          0,              1}
-    };
+    double temp_x = point.x;
 
-    temp_vert = matrix_mult_vector(point, gamma_rotate);
-
-    return temp_vert;
+    point.x = point.x * cos(radians) - point.y * sin(radians);
+    point.y = temp_x * sin(radians) + point.y * cos(radians);
 }
 
 void point_rotate(vertices_t &point, int angle_x, int angle_y, int angle_z)
 {
-    point = x_rotate(point, angle_x);
-    point = y_rotate(point, angle_y);
-    point = z_rotate(point, angle_z);
+//    point = x_rotate(point, angle_x);
+//    point = y_rotate(point, angle_y);
+//    point = z_rotate(point, angle_z);
+    x_rotate(point, angle_x);
+    y_rotate(point, angle_y);
+    z_rotate(point, angle_z);
 }
 
 void point_scale(vertices_t &point, vertices_t coef, vertices_t center)
@@ -94,16 +121,4 @@ void point_move(vertices_t &point, vertices_t coef)
     point.x += coef.x;
     point.y += coef.y;
     point.z += coef.z;
-}
-
-vertices_t screen_projection(vertices_t point)
-{
-    double alpha_angle = 35, beta_angle = 55;
-
-    vertices_t temp_vert = point;
-
-    temp_vert = y_rotate(temp_vert, beta_angle);
-    temp_vert = x_rotate(temp_vert, alpha_angle);
-
-    return temp_vert;
 }

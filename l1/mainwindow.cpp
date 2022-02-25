@@ -85,7 +85,7 @@ void MainWindow::on_move_button_clicked()
     draw_on_scene();
 }
 
-void MainWindow::on_rotate_button_clicked()
+void MainWindow::on_rotate_button_clicked() //rotate starts from 58 degrees
 {
     vertices_t rotate_coef;
     rotate_coef.x = ui->spinBox_rot_x->value();
