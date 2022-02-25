@@ -53,12 +53,12 @@ void MainWindow::on_lineEdit_filename_returnPressed()
     MainWindow::on_load_button_clicked();
 }
 
-void MainWindow::on_scale_button_clicked()          //need debug here
+void MainWindow::on_scale_button_clicked()
 {
     vertices_t scale_coef;
-    sscanf(ui->spinBox_scale_x->text().toUtf8().constData(), "%lf", &scale_coef.x);
-    sscanf(ui->spinBox_scale_y->text().toUtf8().constData(), "%lf", &scale_coef.y);
-    sscanf(ui->spinBox_scale_z->text().toUtf8().constData(), "%lf", &scale_coef.z);
+    scale_coef.x = ui->spinBox_scale_x->value();
+    scale_coef.y = ui->spinBox_scale_y->value();
+    scale_coef.z = ui->spinBox_scale_z->value();
 
 
     data_t only_coef;
@@ -72,13 +72,10 @@ void MainWindow::on_scale_button_clicked()          //need debug here
 void MainWindow::on_move_button_clicked()
 {
     vertices_t move_coef;
-    sscanf(ui->spinBox_move_x->text().toUtf8().constData(), "%lf", &move_coef.x);
-    sscanf(ui->spinBox_move_y->text().toUtf8().constData(), "%lf", &move_coef.y);
-    sscanf(ui->spinBox_move_z->text().toUtf8().constData(), "%lf", &move_coef.z);
+    move_coef.x = ui->spinBox_move_x->value();
+    move_coef.y = ui->spinBox_move_y->value();
+    move_coef.z = ui->spinBox_move_z->value();
 
-
-    QMessageBox::information(this, "move_cf", ui->spinBox_move_y->text());
-    QMessageBox::information(this, "real move_cf", QString::number(move_coef.y));
 
     data_t only_coef;
     only_coef.coef = move_coef;
@@ -91,9 +88,10 @@ void MainWindow::on_move_button_clicked()
 void MainWindow::on_rotate_button_clicked()
 {
     vertices_t rotate_coef;
-    sscanf(ui->spinBox_rot_x->text().toUtf8().constData(), "%lf", &rotate_coef.x);
-    sscanf(ui->spinBox_rot_y->text().toUtf8().constData(), "%lf", &rotate_coef.y);
-    sscanf(ui->spinBox_rot_z->text().toUtf8().constData(), "%lf", &rotate_coef.z);
+    rotate_coef.x = ui->spinBox_rot_x->value();
+    rotate_coef.y = ui->spinBox_rot_y->value();
+    rotate_coef.z = ui->spinBox_rot_z->value();
+
 
     data_t only_coef;
     only_coef.coef = rotate_coef;
