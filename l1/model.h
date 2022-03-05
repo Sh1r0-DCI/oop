@@ -5,9 +5,6 @@
 #include <QString>
 #include <QGraphicsScene>
 #include <QMessageBox>
-#include <iostream>
-#include <stdio.h>
-#include <dir.h>
 
 
 typedef struct vertices

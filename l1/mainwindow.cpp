@@ -1,4 +1,5 @@
-#include <QMessageBox>
+//#include <QMessageBox>
+//#include <iostream>
 
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
@@ -6,7 +7,6 @@
 #include "task_manager.h"
 
 #include <string>
-#include <iostream>
 #include <cstdio>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -85,7 +85,7 @@ void MainWindow::on_move_button_clicked()
     draw_on_scene();
 }
 
-void MainWindow::on_rotate_button_clicked() //rotate starts from 58 degrees
+void MainWindow::on_rotate_button_clicked()
 {
     vertices_t rotate_coef;
     rotate_coef.x = ui->spinBox_rot_x->value();

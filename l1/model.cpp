@@ -94,7 +94,6 @@ int file_load(QString filename, FILE *& f)
 
     if (f == NULL)
     {
-        std::cout << "File error\n";
         return FILE_ERROR;
     }
 
@@ -103,8 +102,6 @@ int file_load(QString filename, FILE *& f)
 
 void scale_model(model_t &model, vertices_t coef_scale)
 {
-    std::cout << "coef in s_m: (" << coef_scale.x << ";"
-              << coef_scale.y << ";" << coef_scale.z << ")\n";
     for (int i = 0; i < model.num_of_vertices; i++)
     {
         point_scale(model.vertices[i], coef_scale, model.center);
