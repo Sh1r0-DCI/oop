@@ -9,7 +9,8 @@ enum Task
     DRAW,
     MOVE,
     SCALE,
-    ROTATE
+    ROTATE,
+    CLEAR
 };
 
 typedef struct data

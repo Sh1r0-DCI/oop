@@ -39,5 +39,6 @@ int file_load(QString filename, FILE *& f);
 void rotate_model(model_t &model, vertices_t coef_angle);
 void scale_model(model_t &model, vertices_t coef_scale);
 void move_model(model_t &model, vertices_t coef_move);
+void clear_model(model_t &model);
 
 #endif // MODEL_H

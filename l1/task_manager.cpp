@@ -22,6 +22,9 @@ int task_manager(Task task_name, data_t data)
     case ROTATE:
         rotate_model(model, data.coef);
         break;
+    case CLEAR:
+        clear_model(model);
+        break;
     default:
         return UNKNOWN_ERROR;
     }

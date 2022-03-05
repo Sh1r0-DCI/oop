@@ -124,3 +124,14 @@ void rotate_model(model_t &model, vertices_t coef_angle)
                      coef_angle.x, coef_angle.y, coef_angle.z);
     }
 }
+
+void clear_model(model_t &model)
+{
+    delete [] model.vertices;
+    delete [] model.edges;
+}
+
+void debug_output()
+{
+    QMessageBox::information(NULL, "закрытие окна", "память очищена");
+}

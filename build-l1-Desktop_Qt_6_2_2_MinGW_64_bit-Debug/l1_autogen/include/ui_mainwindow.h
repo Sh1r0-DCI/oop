@@ -49,6 +49,7 @@ public:
     QGroupBox *groupBox_2;
     QGroupBox *groupBox_3;
     QGroupBox *groupBox_4;
+    QPushButton *pushButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -170,12 +171,16 @@ public:
         spinBox_move_z->raise();
         move_button->raise();
         scale_button->raise();
+        pushButton = new QPushButton(centralwidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(650, 390, 93, 29));
         MainWindow->setCentralWidget(centralwidget);
         groupBox->raise();
         graphicsView->raise();
         lineEdit_filename->raise();
         label->raise();
         load_button->raise();
+        pushButton->raise();
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
         menubar->setGeometry(QRect(0, 0, 1093, 26));
@@ -202,6 +207,7 @@ public:
         groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "\320\234\320\260\321\201\321\210\321\202\320\260\320\261\320\270\321\200\320\276\320\262\320\260\320\275\320\270\320\265", nullptr));
         groupBox_3->setTitle(QCoreApplication::translate("MainWindow", "\320\237\320\265\321\200\320\265\320\275\320\276\321\201", nullptr));
         groupBox_4->setTitle(QCoreApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow", "\320\222\321\213\321\205\320\276\320\264", nullptr));
     } // retranslateUi
 
 };

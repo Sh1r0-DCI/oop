@@ -9,6 +9,8 @@
 #include <string>
 #include <cstdio>
 
+void debug_output();
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -21,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
+    data_t nothing;
+    task_manager(CLEAR, nothing);
+    debug_output();
+
     delete ui;
 }
 
@@ -100,3 +106,11 @@ void MainWindow::on_rotate_button_clicked()
 
     draw_on_scene();
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+    data_t nothing;
+
+    task_manager(CLEAR, nothing);
+}
+
