@@ -9,7 +9,6 @@
 #include <string>
 #include <cstdio>
 
-void debug_output();
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,7 +24,6 @@ MainWindow::~MainWindow()
 {
     data_t nothing;
     task_manager(CLEAR, nothing);
-    debug_output();
 
     delete ui;
 }
@@ -49,9 +47,10 @@ void MainWindow::on_load_button_clicked()
     data_t only_filename;
     only_filename.filename = str;
 
-    task_manager(DOWNLOAD, only_filename);
-
-    draw_on_scene();
+    if (!task_manager(DOWNLOAD, only_filename))
+    {
+        draw_on_scene();
+    }
 }
 
 void MainWindow::on_lineEdit_filename_returnPressed()
@@ -105,12 +104,5 @@ void MainWindow::on_rotate_button_clicked()
     task_manager(ROTATE, only_coef);
 
     draw_on_scene();
-}
-
-void MainWindow::on_pushButton_clicked()
-{
-    data_t nothing;
-
-    task_manager(CLEAR, nothing);
 }
 

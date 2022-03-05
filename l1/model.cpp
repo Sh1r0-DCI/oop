@@ -130,8 +130,3 @@ void clear_model(model_t &model)
     delete [] model.vertices;
     delete [] model.edges;
 }
-
-void debug_output()
-{
-    QMessageBox::information(NULL, "закрытие окна", "память очищена");
-}
