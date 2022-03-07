@@ -1,5 +1,0 @@
-C:/Users/ASUS/Documents/GitHub/oop/build-l1-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/l1.dir
-C:/Users/ASUS/Documents/GitHub/oop/build-l1-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/ASUS/Documents/GitHub/oop/build-l1-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/ASUS/Documents/GitHub/oop/build-l1-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/l1_autogen_timestamp_deps.dir
-C:/Users/ASUS/Documents/GitHub/oop/build-l1-Desktop_Qt_6_2_2_MinGW_64_bit-Debug/CMakeFiles/l1_autogen.dir
