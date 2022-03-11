@@ -4,7 +4,6 @@
 
 #include <QString>
 #include <QGraphicsScene>
-#include <QMessageBox>
 
 
 typedef struct vertices
@@ -36,9 +35,9 @@ void draw_model(QGraphicsScene *scene, model_t model);
 int download_model(model_t &model, QString str);
 int parameter_read(FILE *f, model_t &new_model);
 int file_load(QString filename, FILE *& f);
-void rotate_model(model_t &model, vertices_t coef_angle);
-void scale_model(model_t &model, vertices_t coef_scale);
-void move_model(model_t &model, vertices_t coef_move);
+int rotate_model(model_t &model, vertices_t coef_angle);
+int scale_model(model_t &model, vertices_t coef_scale);
+int move_model(model_t &model, vertices_t coef_move);
 void clear_model(model_t &model);
 
 #endif // MODEL_H

@@ -3,31 +3,32 @@
 
 int task_manager(Task task_name, data_t data)
 {
+    int rc = OK;
     static model_t model;
 
     switch (task_name)
     {
     case DOWNLOAD:
-        return download_model(model, data.filename);
+        rc = download_model(model, data.filename);
         break;
     case DRAW:
         draw_model(data.scene, model);
         break;
     case MOVE:
-        move_model(model, data.coef);
+        rc = move_model(model, data.coef);
         break;
     case SCALE:
-        scale_model(model,data.coef);
+        rc = scale_model(model,data.coef);
         break;
     case ROTATE:
-        rotate_model(model, data.coef);
+        rc = rotate_model(model, data.coef);
         break;
     case CLEAR:
         clear_model(model);
         break;
     default:
-        return UNKNOWN_ERROR;
+        rc = UNKNOWN_ERROR;
     }
 
-    return OK;
+    return rc;
 }

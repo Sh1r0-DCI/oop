@@ -26,17 +26,17 @@ int download_model(model_t &model, QString str)
 {
     FILE *f = NULL;
 
-    QMessageBox::information(NULL, "Открытие файла", "Открытие файла " + str);
+//    QMessageBox::information(NULL, "Открытие файла", "Открытие файла " + str);
 
     if (file_load(str, f))
     {
-        QMessageBox::critical(NULL, "Ошибка", "Ошибка при открытии файла");
+//        QMessageBox::critical(NULL, "Ошибка", "Ошибка при открытии файла");
         return FILE_ERROR;
     }
 
     if (parameter_read(f, model))
     {
-        QMessageBox::critical(NULL, "Ошибка", "Ошибка при чтении файла");
+//        QMessageBox::critical(NULL, "Ошибка", "Ошибка при чтении файла");
         fclose(f);
         return PARAM_ERROR;
     }
@@ -100,29 +100,50 @@ int file_load(QString filename, FILE *& f)
     return OK;
 }
 
-void scale_model(model_t &model, vertices_t coef_scale)
+int scale_model(model_t &model, vertices_t coef_scale)
 {
+    if (model.edges == 0 || model.vertices == 0)
+    {
+        return MODEL_ERROR;
+    }
+
     for (int i = 0; i < model.num_of_vertices; i++)
     {
         point_scale(model.vertices[i], coef_scale, model.center);
     }
+
+    return OK;
 }
 
-void move_model(model_t &model, vertices_t coef_move)
+int move_model(model_t &model, vertices_t coef_move)
 {
+    if (model.edges == 0 || model.vertices == 0)
+    {
+        return MODEL_ERROR;
+    }
+
     for (int i = 0; i < model.num_of_vertices; i++)
     {
         point_move(model.vertices[i], coef_move);
     }
+
+    return OK;
 }
 
-void rotate_model(model_t &model, vertices_t coef_angle)
+int rotate_model(model_t &model, vertices_t coef_angle)
 {
+    if (model.edges == 0 || model.vertices == 0)
+    {
+        return MODEL_ERROR;
+    }
+
     for (int i = 0; i < model.num_of_vertices; i++)
     {
         point_rotate(model.vertices[i],
                      coef_angle.x, coef_angle.y, coef_angle.z);
     }
+
+    return OK;
 }
 
 void clear_model(model_t &model)

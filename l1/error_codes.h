@@ -4,6 +4,7 @@
 #define OK                  0
 #define FILE_ERROR          1
 #define PARAM_ERROR         2
+#define MODEL_ERROR         3
 #define UNKNOWN_ERROR       99
 
 #endif // ERROR_CODES_H

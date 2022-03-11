@@ -2,6 +2,7 @@
 #define PROJECTION_H
 
 #include "model.h"
+#include "error_codes.h"
 
 vertices_t screen_projection(vertices_t point);
 void point_rotate(vertices_t &point, int angle_x, int angle_y, int angle_z);

@@ -1,6 +1,3 @@
-//#include <QMessageBox>
-//#include <iostream>
-
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
@@ -8,6 +5,7 @@
 
 #include <string>
 #include <cstdio>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -47,7 +45,7 @@ void MainWindow::on_load_button_clicked()
     data_t only_filename;
     only_filename.filename = str;
 
-    if (!task_manager(DOWNLOAD, only_filename))
+    if (task_manager(DOWNLOAD, only_filename))
     {
         draw_on_scene();
     }
@@ -69,7 +67,10 @@ void MainWindow::on_scale_button_clicked()
     data_t only_coef;
     only_coef.coef = scale_coef;
 
-    task_manager(SCALE, only_coef);
+    if (task_manager(SCALE, only_coef))
+    {
+        QMessageBox::critical(this, "Ошибка", "Ошибка при масштабировании модели");
+    }
 
     draw_on_scene();
 }
@@ -85,7 +86,10 @@ void MainWindow::on_move_button_clicked()
     data_t only_coef;
     only_coef.coef = move_coef;
 
-    task_manager(MOVE, only_coef);
+    if (task_manager(MOVE, only_coef))
+    {
+        QMessageBox::critical(this, "Ошибка", "Ошибка при смещении модели");
+    }
 
     draw_on_scene();
 }
@@ -101,7 +105,10 @@ void MainWindow::on_rotate_button_clicked()
     data_t only_coef;
     only_coef.coef = rotate_coef;
 
-    task_manager(ROTATE, only_coef);
+    if (task_manager(ROTATE, only_coef))
+    {
+        QMessageBox::critical(this, "Ошибка", "Ошибка при повороте модели");
+    }
 
     draw_on_scene();
 }

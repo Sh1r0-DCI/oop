@@ -1,4 +1,3 @@
-#include <iostream>
 #include <cmath>
 
 #include "projection.h"
@@ -13,7 +12,6 @@ static double deg_to_rad(double deg)
 static void x_rotate(vertices_t& point, const double angle)
 {
     double radians = deg_to_rad(angle);
-
     double temp_y = point.y;
 
     point.y = point.y * cos(radians) + point.z * sin(radians);
@@ -23,7 +21,6 @@ static void x_rotate(vertices_t& point, const double angle)
 static void y_rotate(vertices_t& point, const double angle)
 {
     double radians = deg_to_rad(angle);
-
     double temp_x = point.x;
 
     point.x = point.x * cos(radians) + point.z * sin(radians);
@@ -33,7 +30,6 @@ static void y_rotate(vertices_t& point, const double angle)
 static void z_rotate(vertices_t& point, const double angle)
 {
     double radians = deg_to_rad(angle);
-
     double temp_x = point.x;
 
     point.x = point.x * cos(radians) - point.y * sin(radians);
