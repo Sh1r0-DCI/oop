@@ -45,7 +45,7 @@ void MainWindow::on_load_button_clicked()
     data_t only_filename;
     only_filename.filename = str;
 
-    if (task_manager(DOWNLOAD, only_filename))
+    if (!task_manager(DOWNLOAD, only_filename))
     {
         draw_on_scene();
     }
