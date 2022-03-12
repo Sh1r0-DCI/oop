@@ -24,14 +24,14 @@ typedef struct model
     int num_of_vertices = 0;
     int num_of_edges = 0;
 
-    vertices_t *vertices = 0;
-    edges_t *edges = 0;
+    vertices_t *vertices = NULL;
+    edges_t *edges = NULL;
 
     vertices_t center;
 } model_t;
 
 
-void draw_model(QGraphicsScene *scene, model_t model);
+int draw_model(QGraphicsScene *scene, model_t model);
 int download_model(model_t &model, QString str);
 int parameter_read(FILE *f, model_t &new_model);
 int file_load(QString filename, FILE *& f);

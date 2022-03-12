@@ -12,7 +12,7 @@ int task_manager(Task task_name, data_t data)
         rc = download_model(model, data.filename);
         break;
     case DRAW:
-        draw_model(data.scene, model);
+        rc = draw_model(data.scene, model);
         break;
     case MOVE:
         rc = move_model(model, data.coef);

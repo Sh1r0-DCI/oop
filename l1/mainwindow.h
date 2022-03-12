@@ -19,7 +19,7 @@ public:
 
 private slots:
 
-    int draw_on_scene();
+    void draw_on_scene();
 
     void on_load_button_clicked();
 

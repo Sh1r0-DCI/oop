@@ -2,9 +2,8 @@
 #include "./ui_mainwindow.h"
 
 #include "task_manager.h"
+#include "error_codes.h"
 
-#include <string>
-#include <cstdio>
 #include <QMessageBox>
 
 
@@ -26,7 +25,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-int MainWindow::draw_on_scene()
+void MainWindow::draw_on_scene()
 {
     static QGraphicsScene *scene = ui->graphicsView->scene();
     scene->clear();
@@ -34,9 +33,10 @@ int MainWindow::draw_on_scene()
     data_t only_scene;
     only_scene.scene = scene;
 
-    task_manager(DRAW, only_scene);
-
-    return 0;
+    if(task_manager(DRAW, only_scene))
+    {
+        QMessageBox::critical(this, "Ошибка", "Ошибка при отрисовки модели");
+    }
 }
 
 void MainWindow::on_load_button_clicked()
@@ -45,9 +45,16 @@ void MainWindow::on_load_button_clicked()
     data_t only_filename;
     only_filename.filename = str;
 
+    task_manager(CLEAR, only_filename);
+
     if (!task_manager(DOWNLOAD, only_filename))
     {
+        QMessageBox::information(NULL, "Открытие файла", "Открытие файла " + str);
         draw_on_scene();
+    }
+    else
+    {
+        QMessageBox::critical(this, "Ошибка", "Ошибка при загрузки модели");
     }
 }
 
@@ -71,8 +78,10 @@ void MainWindow::on_scale_button_clicked()
     {
         QMessageBox::critical(this, "Ошибка", "Ошибка при масштабировании модели");
     }
-
-    draw_on_scene();
+    else
+    {
+        draw_on_scene();
+    }
 }
 
 void MainWindow::on_move_button_clicked()
@@ -90,8 +99,10 @@ void MainWindow::on_move_button_clicked()
     {
         QMessageBox::critical(this, "Ошибка", "Ошибка при смещении модели");
     }
-
-    draw_on_scene();
+    else
+    {
+        draw_on_scene();
+    }
 }
 
 void MainWindow::on_rotate_button_clicked()
@@ -109,7 +120,9 @@ void MainWindow::on_rotate_button_clicked()
     {
         QMessageBox::critical(this, "Ошибка", "Ошибка при повороте модели");
     }
-
-    draw_on_scene();
+    else
+    {
+        draw_on_scene();
+    }
 }
 

@@ -1,12 +1,21 @@
 #include "model.h"
 
-#include "error_codes.h"
 #include "projection.h"
 
 #define SCENE_HEIGHT 360
 
-void draw_model(QGraphicsScene *scene, model_t model)
+int draw_model(QGraphicsScene *scene, model_t model)
 {
+    if (!scene)
+    {
+        return UNKNOWN_ERROR;
+    }
+
+    if (model.edges == 0 || model.vertices == 0)
+    {
+        return MODEL_ERROR;
+    }
+
     for (int i = 0; i < model.num_of_edges; i++)
     {
         vertices_t first_point, second_point;
@@ -20,23 +29,21 @@ void draw_model(QGraphicsScene *scene, model_t model)
         scene->addLine(first_point.x, first_point.y,
                        second_point.x, second_point.y);
     }
+
+    return OK;
 }
 
 int download_model(model_t &model, QString str)
 {
     FILE *f = NULL;
 
-//    QMessageBox::information(NULL, "Открытие файла", "Открытие файла " + str);
-
     if (file_load(str, f))
     {
-//        QMessageBox::critical(NULL, "Ошибка", "Ошибка при открытии файла");
         return FILE_ERROR;
     }
 
     if (parameter_read(f, model))
     {
-//        QMessageBox::critical(NULL, "Ошибка", "Ошибка при чтении файла");
         fclose(f);
         return PARAM_ERROR;
     }
@@ -150,4 +157,7 @@ void clear_model(model_t &model)
 {
     delete [] model.vertices;
     delete [] model.edges;
+
+    model.vertices = NULL;
+    model.edges = NULL;
 }
