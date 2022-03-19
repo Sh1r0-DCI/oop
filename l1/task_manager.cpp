@@ -4,7 +4,7 @@
 int task_manager(Task task_name, data_t data)
 {
     int rc = OK;
-    static model_t model;
+    static model_t model = init_model();
 
     switch (task_name)
     {

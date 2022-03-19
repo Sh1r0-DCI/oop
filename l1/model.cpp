@@ -4,6 +4,23 @@
 
 #define SCENE_HEIGHT 360
 
+model_t init_model()
+{
+    model_t model;
+
+    model.num_of_vertices = 0;
+    model.num_of_edges = 0;
+
+    model.vertices = NULL;
+    model.edges = NULL;
+
+    model.center.x = 0;
+    model.center.y = 0;
+    model.center.z = 0;
+
+    return model;
+}
+
 int draw_model(QGraphicsScene *scene, model_t model)
 {
     if (!scene)
@@ -49,7 +66,7 @@ int download_model(model_t &model, QString str) // Qstring - ?
     return rc;
 }
 
-int parameter_read(FILE *f, model_t &new_model) // уровни абстракции, выход из цикла, модель - вар параметр, утечка при ошибке
+int parameter_read(FILE *f, model_t &new_model) // уровни абстракции(3), выход из цикла, модель - вар параметр, утечка при ошибке
 {
     int rc = 0;
 
@@ -67,10 +84,11 @@ int parameter_read(FILE *f, model_t &new_model) // уровни абстракц
         rc = fscanf(f, "%lf%lf%lf", &new_model.vertices[i].x,
                     &new_model.vertices[i].y,
                     &new_model.vertices[i].z);
-        if(rc != 3)
-        {
-            return PARAM_ERROR;
-        }
+    }
+
+    if(rc != 3) // mem clear needed
+    {
+        return PARAM_ERROR;
     }
 
     if (fscanf(f, "%d", &new_model.num_of_edges) != 1)
@@ -78,7 +96,7 @@ int parameter_read(FILE *f, model_t &new_model) // уровни абстракц
         return PARAM_ERROR;
     }
 
-    new_model.edges = new  edges_t[new_model.num_of_edges];
+    new_model.edges = new edges_t[new_model.num_of_edges];
     for (int i = 0; i < new_model.num_of_edges; i++) // вынос
     {
         if (fscanf(f, "%d%d", &new_model.edges[i].first_edge,

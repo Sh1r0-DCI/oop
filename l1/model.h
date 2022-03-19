@@ -31,6 +31,7 @@ typedef struct model
 } model_t;
 
 
+model_t init_model();
 int draw_model(QGraphicsScene *scene, model_t model);
 int download_model(model_t &model, QString str);
 int parameter_read(FILE *f, model_t &new_model);
