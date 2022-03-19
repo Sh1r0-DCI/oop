@@ -33,38 +33,41 @@ int draw_model(QGraphicsScene *scene, model_t model)
     return OK;
 }
 
-int download_model(model_t &model, QString str)
+int download_model(model_t &model, QString str) // Qstring - ?
 {
     FILE *f = NULL;
+    int rc = OK;
 
-    if (file_load(str, f))
-    {
-        return FILE_ERROR;
-    }
+    rc = file_load(str, f);
 
-    if (parameter_read(f, model))
+    if (!rc)
     {
-        fclose(f);
-        return PARAM_ERROR;
+        rc = parameter_read(f, model);
     }
 
     fclose(f);
-    return OK;
+    return rc;
 }
 
-int parameter_read(FILE *f, model_t &new_model)
+int parameter_read(FILE *f, model_t &new_model) // уровни абстракции, выход из цикла, модель - вар параметр, утечка при ошибке
 {
-    if (fscanf(f, "%d", &new_model.num_of_vertices) != 1)
+    int rc = 0;
+
+    rc = fscanf(f, "%d", &new_model.num_of_vertices);
+
+    if (rc != 1)
     {
         return PARAM_ERROR;
     }
 
     new_model.vertices = new vertices_t[new_model.num_of_vertices];
-    for (int i = 0; i < new_model.num_of_vertices; i++)
+
+    for (int i = 0; i < new_model.num_of_vertices; i++) // вынести на уровень ниже?
     {
-        if(fscanf(f, "%lf%lf%lf", &new_model.vertices[i].x,
-                  &new_model.vertices[i].y,
-                  &new_model.vertices[i].z) != 3)
+        rc = fscanf(f, "%lf%lf%lf", &new_model.vertices[i].x,
+                    &new_model.vertices[i].y,
+                    &new_model.vertices[i].z);
+        if(rc != 3)
         {
             return PARAM_ERROR;
         }
@@ -76,7 +79,7 @@ int parameter_read(FILE *f, model_t &new_model)
     }
 
     new_model.edges = new  edges_t[new_model.num_of_edges];
-    for (int i = 0; i < new_model.num_of_edges; i++)
+    for (int i = 0; i < new_model.num_of_edges; i++) // вынос
     {
         if (fscanf(f, "%d%d", &new_model.edges[i].first_edge,
                   &new_model.edges[i].second_edge) != 2)
@@ -94,7 +97,7 @@ int parameter_read(FILE *f, model_t &new_model)
     return OK;
 }
 
-int file_load(QString filename, FILE *& f)
+int file_load(QString filename, FILE *& f) // Qstring - ?
 {
     filename = "C:\\Users\\ASUS\\Documents\\GitHub\\oop\\l1\\data\\" + filename;
     f = fopen(filename.toUtf8().data(), "r");
