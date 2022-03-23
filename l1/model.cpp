@@ -99,11 +99,8 @@ int parameter_read(FILE *f, model_t &new_model) // уровни абстракц
     new_model.edges = new edges_t[new_model.num_of_edges];
     for (int i = 0; i < new_model.num_of_edges; i++) // вынос
     {
-        if (fscanf(f, "%d%d", &new_model.edges[i].first_edge,
-                  &new_model.edges[i].second_edge) != 2)
-        {
-            return PARAM_ERROR;
-        }
+        rc = fscanf(f, "%d%d", &new_model.edges[i].first_edge,
+                    &new_model.edges[i].second_edge);
     }
 
     if (fscanf(f, "%d%d%d", &new_model.center.x,
@@ -112,7 +109,7 @@ int parameter_read(FILE *f, model_t &new_model) // уровни абстракц
         return PARAM_ERROR;
     }
 
-    return OK;
+    return rc;
 }
 
 int file_load(QString filename, FILE *& f) // Qstring - ?
