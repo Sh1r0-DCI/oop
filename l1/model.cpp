@@ -4,6 +4,7 @@
 
 #define SCENE_HEIGHT 360
 
+
 model_t init_model()
 {
     model_t model;
@@ -19,6 +20,15 @@ model_t init_model()
     model.center.z = 0;
 
     return model;
+}
+
+void clear_model(model_t &model)
+{
+    delete [] model.vertices;
+    delete [] model.edges;
+
+    model.vertices = NULL;
+    model.edges = NULL;
 }
 
 int draw_model(QGraphicsScene *scene, model_t model)
@@ -37,8 +47,8 @@ int draw_model(QGraphicsScene *scene, model_t model)
     {
         vertices_t first_point, second_point;
 
-        first_point = model.vertices[model.edges[i].first_edge];
-        second_point = model.vertices[model.edges[i].second_edge];
+        first_point = model.vertices[model.edges[i].start_vert];
+        second_point = model.vertices[model.edges[i].end_vert];
 
         first_point.y = SCENE_HEIGHT - first_point.y;
         second_point.y = SCENE_HEIGHT - second_point.y;
@@ -50,7 +60,7 @@ int draw_model(QGraphicsScene *scene, model_t model)
     return OK;
 }
 
-int download_model(model_t &model, QString str) // Qstring - ?
+int download_model(model_t &model, std::string str) // Qstring - ?
 {
     FILE *f = NULL;
     int rc = OK;
@@ -66,30 +76,30 @@ int download_model(model_t &model, QString str) // Qstring - ?
     return rc;
 }
 
-int parameter_read(FILE *f, model_t &new_model) // уровни абстракции(3), выход из цикла, модель - вар параметр, утечка при ошибке
+int vertices_read(FILE *f, model_t &new_model)
 {
-    int rc = 0;
+    int rc = 3;
 
-    rc = fscanf(f, "%d", &new_model.num_of_vertices);
-
-    if (rc != 1)
+    if (fscanf(f, "%d", &new_model.num_of_vertices) != 1)
     {
         return PARAM_ERROR;
     }
 
     new_model.vertices = new vertices_t[new_model.num_of_vertices];
 
-    for (int i = 0; i < new_model.num_of_vertices; i++) // вынести на уровень ниже?
+    for (int i = 0; i < new_model.num_of_vertices && rc == 3; i++)
     {
         rc = fscanf(f, "%lf%lf%lf", &new_model.vertices[i].x,
                     &new_model.vertices[i].y,
                     &new_model.vertices[i].z);
     }
 
-    if(rc != 3) // mem clear needed
-    {
-        return PARAM_ERROR;
-    }
+    return rc;
+}
+
+int edges_read(FILE *f, model_t &new_model)
+{
+    int rc = 0;
 
     if (fscanf(f, "%d", &new_model.num_of_edges) != 1)
     {
@@ -97,25 +107,55 @@ int parameter_read(FILE *f, model_t &new_model) // уровни абстракц
     }
 
     new_model.edges = new edges_t[new_model.num_of_edges];
-    for (int i = 0; i < new_model.num_of_edges; i++) // вынос
-    {
-        rc = fscanf(f, "%d%d", &new_model.edges[i].first_edge,
-                    &new_model.edges[i].second_edge);
-    }
 
-    if (fscanf(f, "%d%d%d", &new_model.center.x,
-               &new_model.center.y, &new_model.center.z) != 3)
+    for (int i = 0; i < new_model.num_of_edges; i++)
     {
-        return PARAM_ERROR;
+        rc = fscanf(f, "%d%d", &new_model.edges[i].start_vert,
+                    &new_model.edges[i].end_vert);
     }
 
     return rc;
 }
 
-int file_load(QString filename, FILE *& f) // Qstring - ?
+int center_read(FILE *f, model_t &new_model)
+{
+    return fscanf(f, "%lf%lf%lf", &new_model.center.x,
+                   &new_model.center.y, &new_model.center.z);
+}
+
+int parameter_read(FILE *f, model_t &new_model)
+{
+    int rc = 0;
+
+    rc = vertices_read(f, new_model);
+
+    if(rc != 3)
+    {
+        clear_model(new_model);
+        return PARAM_ERROR;
+    }
+
+    rc = edges_read(f, new_model);
+
+    if(rc != 2)
+    {
+        clear_model(new_model);
+        return PARAM_ERROR;
+    }
+
+    if(center_read(f, new_model) != 3)
+    {
+        clear_model(new_model);
+        return PARAM_ERROR;
+    }
+
+    return OK;
+}
+
+int file_load(std::string filename, FILE *& f) // Qstring - ?
 {
     filename = "C:\\Users\\ASUS\\Documents\\GitHub\\oop\\l1\\data\\" + filename;
-    f = fopen(filename.toUtf8().data(), "r");
+    f = fopen(filename.c_str(), "r");
 
     if (f == NULL)
     {
@@ -169,13 +209,4 @@ int rotate_model(model_t &model, vertices_t coef_angle)
     }
 
     return OK;
-}
-
-void clear_model(model_t &model)
-{
-    delete [] model.vertices;
-    delete [] model.edges;
-
-    model.vertices = NULL;
-    model.edges = NULL;
 }

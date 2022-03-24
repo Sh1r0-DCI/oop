@@ -41,7 +41,7 @@ void MainWindow::draw_on_scene()
 
 void MainWindow::on_load_button_clicked()
 {
-    QString str = (ui->lineEdit_filename->text());
+    std::string str = ui->lineEdit_filename->text().toStdString();
     data_t only_filename;
     only_filename.filename = str;
 
@@ -49,7 +49,7 @@ void MainWindow::on_load_button_clicked()
 
     if (!task_manager(DOWNLOAD, only_filename))
     {
-        QMessageBox::information(NULL, "Открытие файла", "Открытие файла " + str);
+        QMessageBox::information(NULL, "Открытие файла", QString::fromUtf8(str.c_str()));
         draw_on_scene();
     }
     else

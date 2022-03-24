@@ -15,7 +15,7 @@ enum Task
 
 typedef struct data
 {
-    QString filename;
+    std::string filename;
     vertices_t coef;
     QGraphicsScene *scene;
 }data_t;

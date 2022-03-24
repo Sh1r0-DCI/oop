@@ -15,8 +15,8 @@ typedef struct vertices
 
 typedef struct edges
 {
-    int first_edge = 0;
-    int second_edge = 0;
+    int start_vert = 0;
+    int end_vert = 0;
 }edges_t;
 
 typedef struct model
@@ -32,13 +32,13 @@ typedef struct model
 
 
 model_t init_model();
+void clear_model(model_t &model);
 int draw_model(QGraphicsScene *scene, model_t model);
-int download_model(model_t &model, QString str);
+int download_model(model_t &model, std::string str);
 int parameter_read(FILE *f, model_t &new_model);
-int file_load(QString filename, FILE *& f);
+int file_load(std::string filename, FILE *& f);
 int rotate_model(model_t &model, vertices_t coef_angle);
 int scale_model(model_t &model, vertices_t coef_scale);
 int move_model(model_t &model, vertices_t coef_move);
-void clear_model(model_t &model);
 
 #endif // MODEL_H
