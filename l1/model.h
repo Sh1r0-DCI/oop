@@ -35,7 +35,7 @@ model_t init_model();
 void clear_model(model_t &model);
 int draw_model(QGraphicsScene *scene, model_t model);
 int download_model(model_t &model, std::string str);
-int parameter_read(FILE *f, model_t &new_model);
+int parameter_read(model_t &new_model, FILE *f);
 int file_load(std::string filename, FILE *& f);
 int rotate_model(model_t &model, vertices_t coef_angle);
 int scale_model(model_t &model, vertices_t coef_scale);

@@ -60,7 +60,7 @@ int draw_model(QGraphicsScene *scene, model_t model)
     return OK;
 }
 
-int download_model(model_t &model, std::string str) // Qstring - ?
+int download_model(model_t &model, std::string str)
 {
     FILE *f = NULL;
     int rc = OK;
@@ -69,14 +69,14 @@ int download_model(model_t &model, std::string str) // Qstring - ?
 
     if (!rc)
     {
-        rc = parameter_read(f, model);
+        rc = parameter_read(model, f);
     }
 
     fclose(f);
     return rc;
 }
 
-int vertices_read(FILE *f, model_t &new_model)
+int vertices_read(model_t &new_model, FILE *f)
 {
     int rc = 3;
 
@@ -97,7 +97,7 @@ int vertices_read(FILE *f, model_t &new_model)
     return rc;
 }
 
-int edges_read(FILE *f, model_t &new_model)
+int edges_read(model_t &new_model, FILE *f)
 {
     int rc = 0;
 
@@ -117,17 +117,17 @@ int edges_read(FILE *f, model_t &new_model)
     return rc;
 }
 
-int center_read(FILE *f, model_t &new_model)
+int center_read(model_t &new_model, FILE *f)
 {
     return fscanf(f, "%lf%lf%lf", &new_model.center.x,
                    &new_model.center.y, &new_model.center.z);
 }
 
-int parameter_read(FILE *f, model_t &new_model)
+int parameter_read(model_t &new_model, FILE *f)
 {
     int rc = 0;
 
-    rc = vertices_read(f, new_model);
+    rc = vertices_read(new_model, f);
 
     if(rc != 3)
     {
@@ -135,7 +135,7 @@ int parameter_read(FILE *f, model_t &new_model)
         return PARAM_ERROR;
     }
 
-    rc = edges_read(f, new_model);
+    rc = edges_read(new_model, f);
 
     if(rc != 2)
     {
@@ -143,7 +143,7 @@ int parameter_read(FILE *f, model_t &new_model)
         return PARAM_ERROR;
     }
 
-    if(center_read(f, new_model) != 3)
+    if(center_read(new_model, f) != 3)
     {
         clear_model(new_model);
         return PARAM_ERROR;
@@ -152,7 +152,7 @@ int parameter_read(FILE *f, model_t &new_model)
     return OK;
 }
 
-int file_load(std::string filename, FILE *& f) // Qstring - ?
+int file_load(std::string filename, FILE *& f)
 {
     filename = "C:\\Users\\ASUS\\Documents\\GitHub\\oop\\l1\\data\\" + filename;
     f = fopen(filename.c_str(), "r");
