@@ -22,13 +22,24 @@ model_t init_model()
     return model;
 }
 
+void clear_vertices(vertices_t *&vertices)
+{
+    delete [] vertices;
+
+    vertices = NULL;
+}
+
+void clear_edges(edges_t *&edges)
+{
+    delete [] edges;
+
+    edges = NULL;
+}
+
 void clear_model(model_t &model)
 {
-    delete [] model.vertices;
-    delete [] model.edges;
-
-    model.vertices = NULL;
-    model.edges = NULL;
+    clear_vertices(model.vertices);
+    clear_edges(model.edges);
 }
 
 int draw_model(QGraphicsScene *scene, model_t model)
@@ -76,93 +87,128 @@ int download_model(model_t &model, std::string str)
     return rc;
 }
 
-int vertices_read(model_t &new_model, FILE *f)
+int read_num_of_verts(int &num_of_vertices, FILE *f)
+{
+    int rc = OK;
+
+    if (fscanf(f, "%d", &num_of_vertices) != 1)
+    {
+        rc = PARAM_ERROR;
+    }
+
+    return rc;
+}
+
+int vertices_read(vertices_t *&vertices, int &num_of_vertices, FILE *f)
 {
     int rc = 3;
 
-    if (fscanf(f, "%d", &new_model.num_of_vertices) != 1)
+    if (!read_num_of_verts(num_of_vertices, f))
     {
-        return PARAM_ERROR;
+        clear_vertices(vertices);
+        vertices = new vertices_t[num_of_vertices];
+
+        for (int i = 0; i < num_of_vertices && rc == 3; i++)
+        {
+            rc = fscanf(f, "%lf%lf%lf", &vertices[i].x,
+                        &vertices[i].y,
+                        &vertices[i].z);
+        }
     }
-
-    new_model.vertices = new vertices_t[new_model.num_of_vertices];
-
-    for (int i = 0; i < new_model.num_of_vertices && rc == 3; i++)
+    else
     {
-        rc = fscanf(f, "%lf%lf%lf", &new_model.vertices[i].x,
-                    &new_model.vertices[i].y,
-                    &new_model.vertices[i].z);
-    }
-
-    return rc;
-}
-
-int edges_read(model_t &new_model, FILE *f)
-{
-    int rc = 0;
-
-    if (fscanf(f, "%d", &new_model.num_of_edges) != 1)
-    {
-        return PARAM_ERROR;
-    }
-
-    new_model.edges = new edges_t[new_model.num_of_edges];
-
-    for (int i = 0; i < new_model.num_of_edges; i++)
-    {
-        rc = fscanf(f, "%d%d", &new_model.edges[i].start_vert,
-                    &new_model.edges[i].end_vert);
+        rc = 0;
     }
 
     return rc;
 }
 
-int center_read(model_t &new_model, FILE *f)
+int read_num_of_edges(int &num_of_edges, FILE *f)
 {
-    return fscanf(f, "%lf%lf%lf", &new_model.center.x,
-                   &new_model.center.y, &new_model.center.z);
+    int rc = OK;
+
+    if (fscanf(f, "%d", &num_of_edges) != 1)
+    {
+        rc = PARAM_ERROR;
+    }
+
+    return rc;
+}
+
+int edges_read(edges_t *&edges, int &num_of_edges, FILE *f)
+{
+    int rc = 2;
+
+    if (read_num_of_edges(num_of_edges, f))
+    {
+        clear_edges(edges);
+        edges = new edges_t[num_of_edges];
+
+        for (int i = 0; i < num_of_edges && rc == 2; i++)
+        {
+            rc = fscanf(f, "%d%d", &edges[i].start_vert,
+                        &edges[i].end_vert);
+        }
+    }
+    else
+    {
+        rc = 0;
+    }
+
+    return rc;
+}
+
+int center_read(vertices_t &center, FILE *f)
+{
+    return fscanf(f, "%lf%lf%lf", &center.x,
+                   &center.y, &center.z);
 }
 
 int parameter_read(model_t &new_model, FILE *f)
 {
-    int rc = 0;
+    int rc = PARAM_ERROR;
 
-    rc = vertices_read(new_model, f);
-
-    if(rc != 3)
+    if(vertices_read(new_model.vertices, new_model.num_of_vertices, f) == 3)
     {
-        clear_model(new_model);
-        return PARAM_ERROR;
+        if(edges_read(new_model.edges, new_model.num_of_edges, f) == 2)
+        {
+            if(center_read(new_model.center, f) == 3)
+            {
+                rc = OK;
+            }
+            else
+            {
+                clear_edges(new_model.edges);
+                clear_vertices(new_model.vertices);
+            }
+        }
+        else
+        {
+            clear_edges(new_model.edges);
+            clear_vertices(new_model.vertices);
+        }
+    }
+    else
+    {
+        clear_vertices(new_model.vertices);
     }
 
-    rc = edges_read(new_model, f);
-
-    if(rc != 2)
-    {
-        clear_model(new_model);
-        return PARAM_ERROR;
-    }
-
-    if(center_read(new_model, f) != 3)
-    {
-        clear_model(new_model);
-        return PARAM_ERROR;
-    }
-
-    return OK;
+    return rc;
 }
 
 int file_load(std::string filename, FILE *& f)
 {
+    int rc = OK;
+
     filename = "C:\\Users\\ASUS\\Documents\\GitHub\\oop\\l1\\data\\" + filename;
     f = fopen(filename.c_str(), "r");
 
     if (f == NULL)
     {
-        return FILE_ERROR;
+        rc = FILE_ERROR;
     }
 
-    return OK;
+    return rc;
 }
 
 int scale_model(model_t &model, vertices_t coef_scale)
