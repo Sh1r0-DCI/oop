@@ -179,7 +179,7 @@ int parameter_read(model_t &new_model, FILE *f)
             else
             {
                 clear_edges(new_model.edges);
-                clear_vertices(new_model.vertices);
+                clear_vertices(new_model.vertices);     // no need in clearing???
             }
         }
         else
@@ -190,7 +190,7 @@ int parameter_read(model_t &new_model, FILE *f)
     }
     else
     {
-        clear_vertices(new_model.vertices);
+        clear_vertices(new_model.vertices);             // else's too far from if
     }
 
     return rc;
