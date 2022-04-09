@@ -49,7 +49,7 @@ int draw_model(QGraphicsScene *scene, model_t model)
         return UNKNOWN_ERROR;
     }
 
-    if (model.edges == 0 || model.vertices == 0)
+    if (model.edges == NULL || model.vertices == NULL)
     {
         return MODEL_ERROR;
     }
@@ -151,33 +151,31 @@ int read_center(vertices_t &center, FILE *f)
 
 int vertices_allocation(vertices_t *&vertices, int num_of_vertices)
 {
+    int rc = OK;
+
     vertices = new vertices_t[num_of_vertices];
 
     if (vertices == NULL)
     {
-        return ALLOC_ERROR;
+        rc = ALLOC_ERROR;
     }
 
-    return OK;
+    return rc;
 }
 
 int handle_vertices(vertices_t *&vertices, int &num_of_vertices, FILE *f)
 {
     int error_code = OK;
 
-    if ((error_code = read_num_of_verts(num_of_vertices, f)))
+    if (!(error_code = read_num_of_verts(num_of_vertices, f)))
     {
-        return error_code;
-    }
-
-    if ((error_code = vertices_allocation(vertices, num_of_vertices)))
-    {
-        return error_code;
-    }
-
-    if ((error_code = read_vertices(vertices, num_of_vertices, f)))
-    {
-        clear_vertices(vertices);
+        if (!(error_code = vertices_allocation(vertices, num_of_vertices)))
+        {
+            if ((error_code = read_vertices(vertices, num_of_vertices, f)))
+            {
+                clear_vertices(vertices);
+            }
+        }
     }
 
     return error_code;
@@ -185,33 +183,31 @@ int handle_vertices(vertices_t *&vertices, int &num_of_vertices, FILE *f)
 
 int edges_allocation(edges_t *&edges, int num_of_edges)
 {
+    int rc = OK;
+
     edges = new edges_t[num_of_edges];
 
     if (edges == NULL)
     {
-        return ALLOC_ERROR;
+        rc = ALLOC_ERROR;
     }
 
-    return OK;
+    return rc;
 }
 
 int handle_edges(edges_t *&edges, int &num_of_edges, FILE *f)
 {
      int error_code = OK;
 
-     if ((error_code = read_num_of_edges(num_of_edges, f)))
+     if (!(error_code = read_num_of_edges(num_of_edges, f)))
      {
-         return error_code;
-     }
-
-     if ((error_code = edges_allocation(edges, num_of_edges)))
-     {
-         return error_code;
-     }
-
-     if ((error_code = read_edges(edges, num_of_edges, f)))
-     {
-         clear_edges(edges);
+         if (!(error_code = edges_allocation(edges, num_of_edges)))
+         {
+             if ((error_code = read_edges(edges, num_of_edges, f)))
+             {
+                 clear_edges(edges);
+             }
+         }
      }
 
      return error_code;
@@ -227,7 +223,11 @@ int load_temp_model(model_t &temp_model, FILE *f)
     {
         rc = handle_edges(temp_model.edges, temp_model.num_of_edges, f);
 
-        if (!rc)
+        if (rc)
+        {
+            clear_vertices(temp_model.vertices);
+        }
+        else
         {
             rc = read_center(temp_model.center, f);
 
@@ -236,10 +236,6 @@ int load_temp_model(model_t &temp_model, FILE *f)
                 clear_vertices(temp_model.vertices);
                 clear_edges(temp_model.edges);
             }
-        }
-        else
-        {
-            clear_vertices(temp_model.vertices);
         }
     }
 
@@ -251,7 +247,7 @@ int download_model(model_t &model, std::string str)
     FILE *f = NULL;
     int rc = OK;
 
-    if ((rc = file_open(str, f)))
+    if (!(rc = file_open(str, f)))
     {
         model_t temp_model = init_model();
         rc = load_temp_model(temp_model, f);
@@ -262,8 +258,6 @@ int download_model(model_t &model, std::string str)
             clear_model(model);
             model = temp_model;
         }
-
-        clear_model(temp_model);
     }
 
     return rc;
