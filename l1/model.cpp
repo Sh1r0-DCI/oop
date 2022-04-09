@@ -5,6 +5,8 @@
 #define SCENE_HEIGHT 360
 
 
+#include <iostream>
+
 model_t init_model()
 {
     model_t model;
@@ -71,22 +73,6 @@ int draw_model(QGraphicsScene *scene, model_t model)
     return OK;
 }
 
-int download_model(model_t &model, std::string str)
-{
-    FILE *f = NULL;
-    int rc = OK;
-
-    rc = file_load(str, f);
-
-    if (!rc)
-    {
-        rc = parameter_read(model, f);
-    }
-
-    fclose(f);
-    return rc;
-}
-
 int read_num_of_verts(int &num_of_vertices, FILE *f)
 {
     int rc = OK;
@@ -99,25 +85,17 @@ int read_num_of_verts(int &num_of_vertices, FILE *f)
     return rc;
 }
 
-int vertices_read(vertices_t *&vertices, int &num_of_vertices, FILE *f)
+int read_vertices(vertices_t *const array, const int size, FILE *f)
 {
-    int rc = 3;
+    int rc = OK;
+    int num_of_read_values = 3;
 
-    if (!read_num_of_verts(num_of_vertices, f))
+    for (int i = 0; i < size && num_of_read_values == 3; i++)
     {
-        clear_vertices(vertices);
-        vertices = new vertices_t[num_of_vertices];
-
-        for (int i = 0; i < num_of_vertices && rc == 3; i++)
+        if ((fscanf(f, "%lf %lf %lf", &array[i].x, &array[i].y, &array[i].z)) != 3)
         {
-            rc = fscanf(f, "%lf%lf%lf", &vertices[i].x,
-                        &vertices[i].y,
-                        &vertices[i].z);
+            rc = PARAM_ERROR;
         }
-    }
-    else
-    {
-        rc = 0;
     }
 
     return rc;
@@ -135,68 +113,137 @@ int read_num_of_edges(int &num_of_edges, FILE *f)
     return rc;
 }
 
-int edges_read(edges_t *&edges, int &num_of_edges, FILE *f)
+//int read_edges(edges_t *&edges, int &num_of_edges, FILE *f)
+//{
+//    int rc = 2;
+
+//    if (read_num_of_edges(num_of_edges, f))
+//    {
+//        clear_edges(edges);
+//        edges = new edges_t[num_of_edges];
+
+//        for (int i = 0; i < num_of_edges && rc == 2; i++)
+//        {
+//            rc = fscanf(f, "%d%d", &edges[i].start_vert,
+//                        &edges[i].end_vert);
+//        }
+//    }
+//    else
+//    {
+//        rc = 0;
+//    }
+
+//    return rc;
+//}
+
+int read_edges(edges_t *const array, const int &size, FILE *f)
 {
-    int rc = 2;
+    int rc = OK;
+    int num_of_read_values = 2;
 
-    if (read_num_of_edges(num_of_edges, f))
+    for (int i = 0; i < size && num_of_read_values == 2; i++)
     {
-        clear_edges(edges);
-        edges = new edges_t[num_of_edges];
-
-        for (int i = 0; i < num_of_edges && rc == 2; i++)
+        if ((fscanf(f, "%d %d", &array[i].start_vert, &array[i].end_vert)) != 2)
         {
-            rc = fscanf(f, "%d%d", &edges[i].start_vert,
-                        &edges[i].end_vert);
+            rc = PARAM_ERROR;
         }
-    }
-    else
-    {
-        rc = 0;
     }
 
     return rc;
 }
 
-int center_read(vertices_t &center, FILE *f)
+int read_center(vertices_t &center, FILE *f)
 {
     return fscanf(f, "%lf%lf%lf", &center.x,
-                   &center.y, &center.z);
+                   &center.y, &center.z) != 3;
 }
 
-int parameter_read(model_t &new_model, FILE *f)
+int handle_vertices(vertices_t *&vertices, int &num_of_vertices, FILE *f)
 {
-    int rc = PARAM_ERROR;
+    int error_code = OK;
 
-    if(vertices_read(new_model.vertices, new_model.num_of_vertices, f) == 3)
+    if ((error_code = read_num_of_verts(num_of_vertices, f)))
     {
-        if(edges_read(new_model.edges, new_model.num_of_edges, f) == 2)
-        {
-            if(center_read(new_model.center, f) == 3)
-            {
-                rc = OK;
-            }
-            else
-            {
-                clear_edges(new_model.edges);
-                clear_vertices(new_model.vertices);     // no need in clearing???
-            }
-        }
-        else
-        {
-            clear_edges(new_model.edges);
-            clear_vertices(new_model.vertices);
-        }
+        return error_code;
     }
-    else
+
+    vertices = new vertices_t[num_of_vertices];
+
+    if ((error_code = read_vertices(vertices, num_of_vertices, f)))
     {
-        clear_vertices(new_model.vertices);             // else's too far from if
+        clear_vertices(vertices);
+    }
+
+    return error_code;
+}
+
+int handle_edges(edges_t *&edges, int &num_of_edges, FILE *f)
+{
+     int error_code = OK;
+
+     if ((error_code = read_num_of_edges(num_of_edges, f)))
+     {
+         return error_code;
+     }
+
+     edges = new edges_t[num_of_edges];
+
+     if ((error_code = read_edges(edges, num_of_edges, f)))
+     {
+         clear_edges(edges);
+     }
+
+     return error_code;
+}
+
+int load_temp_model(model_t &temp_model, FILE *f)
+{
+    int rc = OK;
+
+    if ((rc = handle_vertices(temp_model.vertices, temp_model.num_of_vertices, f)))
+    {
+        return rc;
+    }
+
+    if ((rc = handle_edges(temp_model.edges, temp_model.num_of_edges, f)))
+    {
+        clear_vertices(temp_model.vertices);
+        return rc;
+    }
+
+    if ((rc = read_center(temp_model.center, f)))
+    {
+        clear_vertices(temp_model.vertices);
+        clear_edges(temp_model.edges);
     }
 
     return rc;
 }
 
-int file_load(std::string filename, FILE *& f)
+int download_model(model_t &model, std::string str)
+{
+    FILE *f = NULL;
+    int rc = OK;
+
+    if ((rc = file_open(str, f)))
+    {
+        return rc;
+    }
+
+    model_t temp_model = init_model();
+
+    if (!(rc = load_temp_model(temp_model, f)))
+    {
+        clear_model(model);
+        model = temp_model;
+    }
+
+    fclose(f);
+    std::cout << rc << std::endl;
+    return rc;
+}
+
+int file_open(std::string filename, FILE *& f)
 {
     int rc = OK;
 
