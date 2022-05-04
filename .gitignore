@@ -1,3 +1,7 @@
 build-*/
+
 CMakeLists.txt.user
 CMakeLists.txt.user.325853b
+
+*.exe
+*.o
